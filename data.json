@@ -136,8 +136,44 @@
       "body": "機能や素材を際限なく増やさず、一人でも完成できる範囲を優先します。"
     }
   ],
+  "agents": [
+    {
+      "name": "Claude Code",
+      "vendor": "Anthropic",
+      "tier": "lead",
+      "role": "設計判断・実装・レビューを担う、主力のAIエージェント",
+      "points": [
+        "ヘッドレス実行で複数のリポジトリを自動推進（GitHub Actions と、ローカルの操作パネルから）",
+        "実行ごとのコスト・トークン使用量を記録し、運用の判断材料にしている",
+        "仕様書・タスクカード・権限モード（auto mode）と組み合わせて運用"
+      ]
+    },
+    {
+      "name": "Codex",
+      "vendor": "OpenAI",
+      "tier": "support",
+      "role": "定型的・大量の作業の委譲先",
+      "points": [
+        "設計判断・レビュー・採否は主力側が行い、定型作業だけを委譲する役割分担",
+        "承認の自動審査（auto_review）と利用量の関係を調査中"
+      ]
+    },
+    {
+      "name": "Google Antigravity",
+      "vendor": "Google",
+      "tier": "trial",
+      "role": "エージェント中心の開発環境として試用"
+    },
+    {
+      "name": "Meta Muse Spark",
+      "vendor": "Meta",
+      "tier": "trial",
+      "role": "Meta のモデルとして試用"
+    }
+  ],
+  "agents_checked": "2026年9月",
   "certifications": [
-    { "name": "Azure Solutions Architect Expert", "issuer": "Microsoft Certified", "year": "2024" }
+    { "name": "Azure Solutions Architect Expert", "full": "Microsoft Certified: Azure Solutions Architect Expert", "issuer": "Microsoft", "year": "2024" }
   ],
   "learning": [
     "AIエージェントの利用量を抑える運用の確立",
