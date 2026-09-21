@@ -75,13 +75,13 @@
     },
     {
       "area": "クラウドとインフラ",
-      "summary": "クラウドは体系的に学習し、インフラは自宅で実際に動かして検証しています。",
+      "summary": "クラウドは Azure の設計資格（Azure Solutions Expert）を保有しています。インフラは自宅で実際に動かして検証しています。",
       "points": [
-        "AWS を体系的に学習中（Solutions Architect Professional レベルの知識が目標）",
+        "Azure Solutions Expert 資格を保有",
         "Azure のデータストレージとクラウド設計",
         "Ubuntu Server の自宅サーバーをSSHでヘッドレス運用。Docker、PostgreSQL、Grafana、Prometheus などで検証"
       ],
-      "tech": ["AWS", "Azure", "Ubuntu Server", "Docker", "PostgreSQL"]
+      "tech": ["Azure", "Ubuntu Server", "Docker", "PostgreSQL"]
     }
   ],
   "skills": [
@@ -95,7 +95,7 @@
     },
     {
       "level": "学習・検証中",
-      "items": ["AWS", "Azure", "Docker", "PostgreSQL", "Grafana / Prometheus", "Blender自動化", "3D生成AI", "MUI", "Redux"]
+      "items": ["Docker", "PostgreSQL", "Grafana / Prometheus", "Blender自動化", "3D生成AI", "MUI", "Redux"]
     }
   ],
   "principles": [
@@ -124,10 +124,12 @@
       "body": "機能や素材を際限なく増やさず、一人でも完成できる範囲を優先します。"
     }
   ],
+  "certifications": [
+    { "name": "Azure Solutions Expert", "issuer": "Microsoft" }
+  ],
   "learning": [
-    "AWS Solutions Architect Professional レベルの知識の習得",
     "ローカルAIによる画像生成〜3D制作の自動化",
     "個人開発で得た知見の記事化と継続的な発信"
   ],
-  "updated_at": "2026-09-20"
+  "updated_at": "2026-09-21"
 }
