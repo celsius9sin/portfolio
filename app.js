@@ -62,6 +62,13 @@ function renderHero(d) {
   ];
   $("stats").replaceChildren(...stats.map(([label, n]) =>
     el("div", { cls: "stat" }, [el("b", { text: "0", attrs: { "data-count": n } }), el("span", { text: label })])));
+
+  $("certs").replaceChildren(...(d.certifications || []).map((c) =>
+    el("div", { cls: "cert" }, [
+      el("span", { cls: "cert-label", text: "ACHIEVEMENT UNLOCKED" }),
+      el("b", { text: c.name }),
+      el("span", { cls: "cert-issuer", text: c.issuer })
+    ])));
 }
 
 function renderStrengths(d) {
