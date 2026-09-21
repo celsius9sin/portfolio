@@ -4,14 +4,19 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer = matchMedia("(pointer: fine)").matches;
 const $ = (id) => document.getElementById(id);
 
+/* Section order. `key` is the data.json field that must be non-empty for the section to show. */
 const SECTIONS = [
-  { id: "strengths", num: "01", en: "BUFFS", title: "強み" },
-  { id: "experience", num: "02", en: "QUEST LOG", title: "経験領域" },
-  { id: "skills", num: "03", en: "LOADOUT", title: "スキル" },
-  { id: "principles", num: "04", en: "RULES OF ENGAGEMENT", title: "開発の流儀" },
-  { id: "learning", num: "05", en: "NEXT STREAM", title: "学習中・取り組み中" }
+  { id: "strengths", key: "strengths", en: "BUFFS", title: "強み" },
+  { id: "experience", key: "experience", en: "QUEST LOG", title: "経験領域" },
+  { id: "agents", key: "agents", en: "PARTY", title: "使用AIエージェント" },
+  { id: "skills", key: "skills", en: "LOADOUT", title: "スキル" },
+  { id: "certs", key: "certifications", en: "ACHIEVEMENTS", title: "資格" },
+  { id: "principles", key: "principles", en: "RULES OF ENGAGEMENT", short: "RULES", title: "開発の流儀" },
+  { id: "learning", key: "learning", en: "NEXT STREAM", title: "学習中・取り組み中" }
 ];
 const TIERS = ["MAIN WEAPON", "SIDEARM", "IN TRAINING"];
+const AGENT_TIERS = { lead: "主力 // LEAD", support: "併用 // SUPPORT", trial: "試用 // TRIAL" };
+const pad2 = (n) => String(n).padStart(2, "0");
 
 /* ---------- DOM helpers ---------- */
 function el(tag, opts = {}, children = []) {
@@ -119,14 +124,42 @@ function renderPrinciples(d) {
   ])]);
 }
 
+function renderAgents(d) {
+  const cards = d.agents.map((a, i) =>
+    el("div", { cls: `agent tier-${a.tier} rv`, i }, [panel([
+      el("div", { cls: "agent-top" }, [
+        el("span", { cls: "slot-no", text: `SLOT ${pad2(i + 1)}` }),
+        el("span", { cls: "tier-badge", text: AGENT_TIERS[a.tier] || a.tier })
+      ]),
+      el("h3", { text: a.name }),
+      el("div", { cls: "vendor", text: a.vendor }),
+      el("p", { cls: "agent-role", text: a.role }),
+      ...(a.points && a.points.length ? [el("ul", { cls: "agent-points" }, a.points.map((p) => el("li", { text: p })))] : [])
+    ])]));
+  const note = d.agents_checked ? [el("p", { cls: "fine-print rv", text: `使用状況は ${d.agents_checked} 時点。「試用」は、継続運用ではなく試した範囲です。` })] : [];
+  return el("div", {}, [el("div", { cls: "party" }, cards), ...note]);
+}
+
+function renderCerts(d) {
+  const rows = d.certifications.map((c) =>
+    el("li", {}, [
+      el("div", {}, [el("b", { text: c.full || c.name }), el("span", { cls: "cert-org", text: c.issuer })]),
+      el("span", { cls: "cert-year", text: c.year ? `${c.year}年取得` : "" })
+    ]));
+  return el("div", { cls: "rv" }, [
+    panel([el("ul", { cls: "certlist" }, rows)]),
+    el("p", { cls: "fine-print", text: "取得済みの資格のみ掲載しています。" })
+  ]);
+}
+
 function renderLearning(d) {
   const rows = d.learning.map((t) => el("li", {}, [el("b", { text: "NEXT ▶" }), el("span", { text: t })]));
   return el("div", { cls: "rv" }, [panel([el("ul", { cls: "next" }, rows)])]);
 }
 
-function renderRail() {
-  $("rail").replaceChildren(...SECTIONS.map((s) =>
-    el("a", { attrs: { href: `#${s.id}`, "data-for": s.id } }, [el("b", { text: s.num }), el("span", { text: s.en })])));
+function renderRail(sections) {
+  $("rail").replaceChildren(...sections.map((s) =>
+    el("a", { attrs: { href: `#${s.id}`, "data-for": s.id } }, [el("b", { text: s.num }), el("span", { text: s.short || s.en })])));
 }
 
 function renderTicker(d) {
@@ -146,13 +179,14 @@ function renderEnd(d) {
 function render(d) {
   document.title = d.title;
   renderHero(d);
-  renderRail();
+  const active = SECTIONS.filter((s) => d[s.key] && d[s.key].length).map((s, i) => ({ ...s, num: pad2(i + 1) }));
+  renderRail(active);
   renderTicker(d);
   const bodies = {
-    strengths: renderStrengths, experience: renderExperience, skills: renderSkills,
-    principles: renderPrinciples, learning: renderLearning
+    strengths: renderStrengths, experience: renderExperience, agents: renderAgents, skills: renderSkills,
+    certs: renderCerts, principles: renderPrinciples, learning: renderLearning
   };
-  $("sections").replaceChildren(...SECTIONS.map((s) => section(s, bodies[s.id](d))));
+  $("sections").replaceChildren(...active.map((s) => section(s, bodies[s.id](d))));
   renderEnd(d);
 }
 

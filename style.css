@@ -349,3 +349,33 @@ h1 em { font-style: normal; color: var(--yellow); }
 /* Safety net: release the boot overlay even if the script fails */
 .boot { animation: boot-out 0.5s ease 4s forwards; }
 @keyframes boot-out { to { opacity: 0; visibility: hidden; } }
+
+/* ===== Party (AI agents) ===== */
+.party { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
+.agent { grid-column: span 6; }
+.agent.tier-lead { grid-column: span 7; }
+.agent.tier-support { grid-column: span 5; }
+.agent-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.slot-no { font: 500 11px/1 var(--font-mono); letter-spacing: 0.2em; color: var(--muted); }
+.tier-badge { font: 700 10px/1 var(--font-hud); letter-spacing: 0.22em; padding: 5px 8px; border: 1px solid var(--line-hi); color: var(--muted); white-space: nowrap; }
+.tier-lead .tier-badge { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.tier-support .tier-badge { color: var(--cyan); border-color: rgba(25, 243, 255, 0.5); }
+.agent h3 { margin: 0; font: 400 clamp(1.3rem, 2.6vw, 1.8rem)/1.25 var(--font-disp); }
+.tier-trial h3 { font-size: 1.25rem; }
+.vendor { margin: 6px 0 14px; font: 500 11px/1.6 var(--font-mono); letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+.agent-role { margin: 0; font-weight: 700; }
+.tier-trial .agent-role { color: #b9bfd0; font-weight: 500; }
+.agent-points { margin: 14px 0 0; padding: 0; list-style: none; font-size: 0.93rem; color: #b9bfd0; }
+.agent-points li { position: relative; padding-left: 20px; margin-bottom: 8px; }
+.agent-points li::before { content: ">"; position: absolute; left: 0; font: 700 0.9rem/1.85 var(--font-mono); color: var(--cyan); }
+.fine-print { margin: 16px 0 0; font: 500 11px/1.7 var(--font-mono); letter-spacing: 0.08em; color: var(--muted); }
+@media (max-width: 860px) { .agent, .agent.tier-lead, .agent.tier-support { grid-column: 1 / -1; } }
+
+/* ===== Certifications ===== */
+.certlist { list-style: none; margin: 0; padding: 0; }
+.certlist li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+.certlist li:first-child { padding-top: 0; }
+.certlist li:last-child { border-bottom: 0; padding-bottom: 0; }
+.certlist b { display: block; font: 700 1.05rem/1.5 var(--font-jp); }
+.cert-org { font: 500 11px/1.6 var(--font-mono); letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
+.cert-year { font: 700 12px/1 var(--font-mono); letter-spacing: 0.12em; color: var(--yellow); white-space: nowrap; }
