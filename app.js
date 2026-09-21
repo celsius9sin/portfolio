@@ -278,21 +278,6 @@ function setupTilt() {
   });
 }
 
-function setupReticle() {
-  if (reduceMotion || !finePointer) return;
-  const r = $("reticle");
-  let tx = 0, ty = 0, x = 0, y = 0;
-  addEventListener("pointermove", (e) => { tx = e.clientX; ty = e.clientY; r.classList.add("on"); });
-  document.addEventListener("pointerleave", () => r.classList.remove("on"));
-  document.addEventListener("pointerover", (e) => r.classList.toggle("hot", !!e.target.closest("a, .panel")));
-  (function loop() {
-    x += (tx - x) * 0.22;
-    y += (ty - y) * 0.22;
-    r.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    requestAnimationFrame(loop);
-  })();
-}
-
 function setupBackground() {
   const cv = $("bg");
   const ctx = cv.getContext("2d");
@@ -411,7 +396,6 @@ fetch("data.json", { cache: "no-store" })
     setupActiveSection();
     setupClock();
     setupTilt();
-    setupReticle();
   })
   .catch(() => {
     $("error").hidden = false;

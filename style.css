@@ -12,7 +12,7 @@
   --magenta: #ff2e88;
   --red: #ff3b3b;
   --font-jp: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-  --font-disp: "Dela Gothic One", "Zen Kaku Gothic New", sans-serif;
+  --font-disp: "Chakra Petch", "Zen Kaku Gothic New", sans-serif;
   --font-hud: "Chakra Petch", "Zen Kaku Gothic New", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
   --cut: 16px;
@@ -140,8 +140,8 @@ section { padding: clamp(56px, 9vw, 104px) 0 0; scroll-margin-top: 40px; }
 .kicker::before { content: "▍"; color: var(--yellow); margin-right: 8px; }
 h1 {
   margin: 18px 0 22px;
-  font: 400 clamp(1.45rem, 3.4vw, 2.7rem)/1.35 var(--font-disp);
-  letter-spacing: 0.01em;
+  font: 700 clamp(1.5rem, 3.3vw, 2.6rem)/1.4 var(--font-disp);
+  letter-spacing: 0.02em;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -213,11 +213,11 @@ h1 em { font-style: normal; color: var(--yellow); }
 /* ===== Section heading ===== */
 .sec-head { display: flex; align-items: flex-end; gap: clamp(14px, 3vw, 28px); margin-bottom: clamp(28px, 5vw, 44px); }
 .sec-num {
-  font: 400 clamp(3.6rem, 9vw, 6rem)/0.8 var(--font-disp);
+  font: 700 clamp(3.6rem, 9vw, 6rem)/0.8 var(--font-disp);
   color: transparent; -webkit-text-stroke: 1px var(--line-hi);
 }
 .sec-en { display: block; font: 700 12px/1 var(--font-hud); letter-spacing: 0.3em; color: var(--yellow); margin-bottom: 8px; }
-.sec-title { margin: 0; font: 400 clamp(1.5rem, 3.4vw, 2.2rem)/1.2 var(--font-disp); }
+.sec-title { margin: 0; font: 700 clamp(1.5rem, 3.4vw, 2.2rem)/1.2 var(--font-disp); }
 
 /* ===== Reveal / panels ===== */
 .rv { opacity: 0; translate: 0 26px; transition: opacity 0.7s ease, translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); transition-delay: calc(var(--i, 0) * 80ms); }
@@ -314,18 +314,6 @@ h1 em { font-style: normal; color: var(--yellow); }
 .ticker-track span:nth-child(5n) { color: var(--yellow); }
 @keyframes marquee { to { translate: -50% 0; } }
 
-/* ===== Reticle cursor ===== */
-.reticle {
-  position: fixed; left: 0; top: 0; z-index: 90; width: 34px; height: 34px; margin: -17px 0 0 -17px;
-  pointer-events: none; opacity: 0; transition: opacity 0.3s, scale 0.2s;
-  border: 1px solid var(--cyan); border-radius: 50%;
-}
-.reticle::before, .reticle::after { content: ""; position: absolute; background: var(--cyan); }
-.reticle::before { left: 50%; top: -6px; bottom: -6px; width: 1px; }
-.reticle::after { top: 50%; left: -6px; right: -6px; height: 1px; }
-.reticle.on { opacity: 0.85; }
-.reticle.hot { scale: 1.6; border-color: var(--yellow); }
-.reticle.hot::before, .reticle.hot::after { background: var(--yellow); }
 
 .error { position: relative; z-index: 2; padding: 120px 24px; color: var(--muted); text-align: center; }
 
@@ -360,7 +348,7 @@ h1 em { font-style: normal; color: var(--yellow); }
 .tier-badge { font: 700 10px/1 var(--font-hud); letter-spacing: 0.22em; padding: 5px 8px; border: 1px solid var(--line-hi); color: var(--muted); white-space: nowrap; }
 .tier-lead .tier-badge { background: var(--yellow); color: #000; border-color: var(--yellow); }
 .tier-support .tier-badge { color: var(--cyan); border-color: rgba(25, 243, 255, 0.5); }
-.agent h3 { margin: 0; font: 400 clamp(1.3rem, 2.6vw, 1.8rem)/1.25 var(--font-disp); }
+.agent h3 { margin: 0; font: 700 clamp(1.3rem, 2.6vw, 1.8rem)/1.25 var(--font-disp); }
 .tier-trial h3 { font-size: 1.25rem; }
 .vendor { margin: 6px 0 14px; font: 500 11px/1.6 var(--font-mono); letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
 .agent-role { margin: 0; font-weight: 700; }
