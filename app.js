@@ -44,7 +44,7 @@ function renderHero(d) {
   const h1 = $("headline");
   const phrases = d.headline.split(/(?<=、)/);
   h1.setAttribute("data-text", phrases.join("\n"));
-  const key = "生成AI";
+  const key = "AIエージェント";
   h1.replaceChildren(...phrases.map((ph) => {
     const line = el("span", { cls: "ph" });
     const at = ph.indexOf(key);
@@ -67,7 +67,7 @@ function renderHero(d) {
     el("div", { cls: "cert" }, [
       el("span", { cls: "cert-label", text: "ACHIEVEMENT UNLOCKED" }),
       el("b", { text: c.name }),
-      el("span", { cls: "cert-issuer", text: c.issuer })
+      el("span", { cls: "cert-issuer", text: c.year ? `${c.issuer} · ${c.year}年取得` : c.issuer })
     ])));
 }
 
