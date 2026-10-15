@@ -173,12 +173,14 @@
   ],
   "agents_checked": "2026年9月",
   "certifications": [
-    { "name": "Azure Solutions Architect Expert", "full": "Microsoft Certified: Azure Solutions Architect Expert", "issuer": "Microsoft", "year": "2024" }
+    { "name": "Azure Solutions Architect Expert", "full": "Microsoft Certified: Azure Solutions Architect Expert", "issuer": "Microsoft", "year": "2024" },
+    { "name": "応用情報技術者試験 合格", "full": "応用情報技術者試験 合格", "issuer": "IPA(情報処理推進機構)" },
+    { "name": "情報処理安全確保支援士試験 合格", "full": "情報処理安全確保支援士試験 合格", "issuer": "IPA(情報処理推進機構)" }
   ],
   "learning": [
     "AIエージェントの利用量を抑える運用の確立",
     "ローカルAIによる画像生成〜3D制作の自動化",
     "個人開発で得た知見の記事化と継続的な発信"
   ],
-  "updated_at": "2026-09-21"
+  "updated_at": "2026-10-16"
 }
