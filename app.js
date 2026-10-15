@@ -9,11 +9,11 @@ const SECTIONS = [
   { id: "works", key: null, en: "SHOWCASE", title: "作品例" },
   { id: "strengths", key: "strengths", en: "BUFFS", title: "強み" },
   { id: "experience", key: "experience", en: "QUEST LOG", title: "経験領域" },
-  { id: "agents", key: "agents", en: "PARTY", title: "使用AIエージェント" },
+  { id: "agents", key: "agents", en: "PARTY", title: "使用AIエージェント", rail: "AIエージェント" },
   { id: "skills", key: "skills", en: "LOADOUT", title: "スキル" },
   { id: "certs", key: "certifications", en: "ACHIEVEMENTS", title: "資格" },
-  { id: "principles", key: "principles", en: "RULES OF ENGAGEMENT", short: "RULES", title: "開発の流儀" },
-  { id: "learning", key: "learning", en: "NEXT STREAM", title: "学習中・取り組み中" }
+  { id: "principles", key: "principles", en: "RULES OF ENGAGEMENT", title: "開発の流儀" },
+  { id: "learning", key: "learning", en: "NEXT STREAM", title: "学習中・取り組み中", rail: "取り組み中" }
 ];
 const TIERS = ["MAIN WEAPON", "SIDEARM", "IN TRAINING"];
 const AGENT_TIERS = { lead: "主力 // LEAD", support: "併用 // SUPPORT", trial: "試用 // TRIAL" };
@@ -89,7 +89,7 @@ function renderHero(d) {
   $("stats").replaceChildren(...stats.map(([label, n]) =>
     el("div", { cls: "stat" }, [el("b", { text: "0", attrs: { "data-count": n } }), el("span", { text: label })])));
 
-  $("certs").replaceChildren(...(d.certifications || []).map((c) =>
+  $("heroCerts").replaceChildren(...(d.certifications || []).map((c) =>
     el("div", { cls: "cert" }, [
       el("span", { cls: "cert-label", text: "ACHIEVEMENT UNLOCKED" }),
       el("b", { text: c.name }),
@@ -199,7 +199,7 @@ function renderLearning(d) {
 
 function renderRail(sections) {
   $("rail").replaceChildren(...sections.map((s) =>
-    el("a", { attrs: { href: `#${s.id}`, "data-for": s.id } }, [el("b", { text: s.num }), el("span", { text: s.short || s.en })])));
+    el("a", { attrs: { href: `#${s.id}`, "data-for": s.id } }, [el("b", { text: s.num }), el("span", { text: s.rail || s.title })])));
 }
 
 function renderTicker(d) {
@@ -286,6 +286,79 @@ function setupActiveSection() {
   };
   addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
   update();
+}
+
+/* The scanner's hand spins on its own; grab it to turn it, and a fling keeps it spinning before it settles back. */
+function setupScanner() {
+  const sc = $("scanner");
+  const hand = sc.querySelector(".sweep");
+  const mode = $("scanMode");
+  const base = reduceMotion ? 0 : 72; // deg per second (one turn every 5s)
+  let ang = 0, vel = base, drag = false, last = 0, lastT = 0, prevT = performance.now();
+
+  const angleAt = (e) => {
+    const r = sc.querySelector("svg").getBoundingClientRect();
+    return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2)) * 180 / Math.PI + 90;
+  };
+  sc.addEventListener("pointerdown", (e) => {
+    drag = true;
+    sc.setPointerCapture(e.pointerId);
+    sc.classList.add("dragging");
+    mode.textContent = "MANUAL";
+    last = angleAt(e); lastT = performance.now(); vel = 0;
+  });
+  sc.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const a = angleAt(e), now = performance.now();
+    const d = ((a - last + 540) % 360) - 180;
+    ang += d;
+    vel = vel * 0.5 + (d / Math.max((now - lastT) / 1000, 0.008)) * 0.5;
+    last = a; lastT = now;
+  });
+  const release = () => {
+    if (!drag) return;
+    drag = false;
+    sc.classList.remove("dragging");
+    if (performance.now() - lastT > 80) vel = 0; // held still before letting go
+    vel = Math.max(-1800, Math.min(1800, vel));
+  };
+  sc.addEventListener("pointerup", release);
+  sc.addEventListener("pointercancel", release);
+
+  (function loop(now) {
+    const dt = Math.min((now - prevT) / 1000, 0.05);
+    prevT = now;
+    if (!drag) {
+      vel += (base - vel) * Math.min(1, dt * 1.2);
+      ang += vel * dt;
+      if (mode.textContent !== "AUTO" && Math.abs(vel - base) < 4) mode.textContent = "AUTO";
+    }
+    hand.style.transform = `rotate(${ang}deg)`;
+    requestAnimationFrame(loop);
+  })(prevT);
+}
+
+function setupCopy() {
+  const btn = $("copyMail");
+  const status = $("copyStatus");
+  const addr = $("mailAddr").textContent.trim();
+  let timer = 0;
+  btn.addEventListener("click", async () => {
+    let ok = false;
+    try { await navigator.clipboard.writeText(addr); ok = true; } catch (e) {
+      // Fallback for browsers without the async clipboard API
+      const ta = el("textarea", { attrs: { readonly: "" } });
+      ta.value = addr; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+      ta.remove();
+    }
+    btn.textContent = ok ? "コピーしました" : "コピーできませんでした";
+    btn.classList.toggle("done", ok);
+    status.textContent = ok ? "" : "アドレスを選択してコピーしてください";
+    clearTimeout(timer);
+    timer = setTimeout(() => { btn.textContent = "コピー"; btn.classList.remove("done"); status.textContent = ""; }, 2000);
+  });
 }
 
 function setupClock() {
@@ -427,6 +500,8 @@ function setupBoot() {
 /* ---------- Start ---------- */
 setupBoot();
 setupBackground();
+setupScanner();
+setupCopy();
 
 fetch("data.json", { cache: "no-store" })
   .then((res) => res.json())

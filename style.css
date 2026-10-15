@@ -105,10 +105,9 @@ body {
 .signal b:nth-child(1) { height: 4px; } .signal b:nth-child(2) { height: 7px; }
 .signal b:nth-child(3) { height: 10px; } .signal b:nth-child(4) { height: 12px; }
 .social { display: flex; align-items: center; gap: 6px; flex: none; }
-.social a { display: grid; place-items: center; width: 38px; height: 38px; color: var(--text); border: 1px solid var(--line-hi); transition: color 0.2s, border-color 0.2s, background 0.2s; }
+.social a { display: grid; place-items: center; width: 44px; height: 44px; color: var(--text); border: 1px solid var(--line-hi); transition: color 0.2s, border-color 0.2s, background 0.2s; }
 .social a:hover, .social a:focus-visible { color: #000; background: var(--yellow); border-color: var(--yellow); }
-.social svg { width: 18px; height: 18px; fill: currentColor; }
-.social a:last-child svg { fill: none; }
+.social svg { width: 22px; height: 22px; fill: currentColor; }
 @media (max-width: 640px) { .hud-clock, .signal, .hud-section { display: none; } }
 
 /* ===== Section rail ===== */
@@ -120,16 +119,21 @@ body {
 .rail a {
   display: flex; align-items: center; gap: 10px;
   font: 700 11px/1 var(--font-mono);
-  color: var(--line-hi); text-decoration: none;
+  color: var(--muted); text-decoration: none;
   padding: 6px 0;
   transition: color 0.2s;
 }
 .rail a::before { content: ""; width: 14px; height: 1px; background: currentColor; transition: width 0.25s; }
-.rail a span { opacity: 0; translate: -6px 0; transition: 0.25s; white-space: nowrap; letter-spacing: 0.1em; }
-.rail a:hover, .rail a.on { color: var(--yellow); }
+.rail a span { opacity: 0; translate: -6px 0; transition: 0.25s; white-space: nowrap; font: 500 12px/1 var(--font-jp); }
+.rail a:hover { color: var(--text); }
+.rail a.on { color: var(--yellow); }
 .rail a:hover::before, .rail a.on::before { width: 30px; }
+.rail a.on::before { height: 2px; box-shadow: 0 0 8px var(--yellow); }
 .rail a:hover span, .rail a.on span { opacity: 1; translate: 0 0; }
+.rail a.on span { font-weight: 700; text-shadow: 0 0 10px rgba(252, 238, 10, 0.55); }
 @media (min-width: 1240px) { .rail { display: flex; } }
+/* Wide enough that labels never overlap the content: show every label, highlight the current one. */
+@media (min-width: 1340px) { .rail a span { opacity: 1; translate: 0 0; } }
 
 /* ===== Layout ===== */
 main { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
@@ -182,22 +186,17 @@ h1 em { font-style: normal; color: var(--yellow); }
 }
 .lead-text { color: #b9bfd0; max-width: 40em; margin: 0; font-size: 1rem; }
 h1.catch { margin-bottom: 18px; font-size: clamp(2.1rem, 5.6vw, 4.2rem); line-height: 1.25; font-family: var(--font-jp); }
-.links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 28px; }
-.links a {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 18px 10px 14px; min-width: 150px;
-  color: var(--text); text-decoration: none;
-  background: rgba(12, 15, 23, 0.85); border: 1px solid var(--line-hi);
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 28px; }
+.contact-label { font: 700 11px/1 var(--font-hud); letter-spacing: 0.24em; color: var(--yellow); }
+.contact-addr { font: 500 clamp(0.95rem, 1.6vw, 1.1rem)/1.4 var(--font-mono); color: var(--text); user-select: all; overflow-wrap: anywhere; }
+.copy-btn {
+  font: 700 12px/1 var(--font-jp); color: var(--text); cursor: pointer;
+  padding: 8px 14px; background: transparent; border: 1px solid var(--line-hi);
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-.links a:hover, .links a:focus-visible { background: var(--yellow); color: #000; border-color: var(--yellow); }
-.links svg { width: 24px; height: 24px; flex: none; fill: currentColor; }
-.links a.mail svg { fill: none; }
-.links span { display: flex; flex-direction: column; font: 700 1rem/1.2 var(--font-hud); letter-spacing: 0.06em; }
-.links small { font: 500 11px/1.4 var(--font-jp); letter-spacing: 0; color: var(--muted); }
-.links a:hover small, .links a:focus-visible small { color: #000; }
-@media (max-width: 640px) { .links a { flex: 1 1 calc(50% - 10px); min-width: 0; } }
+.copy-btn:hover, .copy-btn:focus-visible { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.copy-btn.done { color: var(--cyan); border-color: var(--cyan); background: transparent; }
+.copy-status { font-size: 12px; color: var(--muted); }
 .hero-sub { margin: 0 0 16px; font: 700 clamp(1.05rem, 1.9vw, 1.35rem)/1.6 var(--font-jp); word-break: keep-all; overflow-wrap: anywhere; }
 .hero-sub .ph { display: block; }
 .hero-sub em { font-style: normal; color: var(--cyan); }
@@ -227,7 +226,10 @@ h1.catch { margin-bottom: 18px; font-size: clamp(2.1rem, 5.6vw, 4.2rem); line-he
 .scanner svg { width: 100%; height: 100%; overflow: visible; }
 .scanner .ring-a { transform-origin: 50% 50%; animation: spin 26s linear infinite; }
 .scanner .ring-b { transform-origin: 50% 50%; animation: spin 18s linear infinite reverse; }
-.scanner .sweep { transform-origin: 50% 50%; animation: spin 5s linear infinite; }
+.scanner .sweep { transform-origin: 50% 50%; }
+.scanner { cursor: grab; touch-action: none; user-select: none; }
+.scanner.dragging { cursor: grabbing; }
+.scanner.dragging .sweep path:first-child { fill-opacity: .2; }
 @keyframes spin { to { rotate: 360deg; } }
 .scanner-cap {
   position: absolute; left: 0; right: 0; bottom: -8px;
