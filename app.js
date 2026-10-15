@@ -6,7 +6,7 @@ const $ = (id) => document.getElementById(id);
 
 /* Section order. `key` is the data.json field that must be non-empty for the section to show. */
 const SECTIONS = [
-  { id: "works", key: null, en: "SHOWCASE", title: "作品" },
+  { id: "works", key: null, en: "SHOWCASE", title: "作品例" },
   { id: "strengths", key: "strengths", en: "BUFFS", title: "強み" },
   { id: "experience", key: "experience", en: "QUEST LOG", title: "経験領域" },
   { id: "agents", key: "agents", en: "PARTY", title: "使用AIエージェント" },
