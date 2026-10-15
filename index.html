@@ -32,7 +32,17 @@
     <nav class="social" aria-label="連絡先・リンク">
       <a href="https://x.com/celsius9sin" target="_blank" rel="noopener noreferrer" aria-label="X" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93ZM17.6 20.64h2.04L6.49 3.24H4.3Z"/></svg></a>
       <a href="https://zenn.dev/celsius9sin" target="_blank" rel="noopener noreferrer" aria-label="Zennの記事" title="Zennの記事"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.26 23.77h4.99c.26 0 .5-.15.64-.35L19.61.87c.18-.29-.03-.64-.38-.64h-4.72c-.24 0-.44.11-.56.32L.03 23.36c-.09.18.03.41.23.41ZM17.45 23.42l6.48-10.41c.2-.32-.03-.73-.41-.73h-4.7c-.17 0-.35.09-.44.23l-6.65 10.65c-.18.26.03.61.35.61h4.78c.23 0 .47-.12.59-.35Z"/></svg></a>
+      <button type="button" id="mailToggle" aria-expanded="false" aria-controls="mailPop" aria-label="メールアドレスを表示" title="メール"><svg class="line" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4.5" width="20" height="15" rx="1"/><path d="m2.5 5.5 9.5 7.5 9.5-7.5"/></svg></button>
     </nav>
+  </div>
+  <div class="mail-pop" id="mailPop" hidden>
+    <span class="mail-pop-label">CONTACT</span>
+    <span class="mail-addr" id="mailAddr">taka.contact.ai.dev@gmail.com</span>
+    <button type="button" class="copy-icon" id="copyMail" aria-label="メールアドレスをコピー" title="コピー">
+      <svg class="line ic-copy" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="1.5"/><path d="M16 8V4.5A1.5 1.5 0 0 0 14.5 3h-10A1.5 1.5 0 0 0 3 4.5v10A1.5 1.5 0 0 0 4.5 16H8"/></svg>
+      <svg class="line ic-done" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+    </button>
+    <span class="copy-status" id="copyStatus" role="status" aria-live="polite"></span>
   </div>
 </header>
 
@@ -43,12 +53,6 @@
     <div>
       <div class="kicker rv">Player profile // Engineer</div>
       <h1 class="catch glitch rv" style="--i:1" data-text="好きなことで&#10;世界を少し面白く"><span class="ph">好きなことで</span><span class="ph">世界を<em>少し面白く</em></span></h1>
-      <div class="contact rv" style="--i:2">
-        <span class="contact-label">CONTACT</span>
-        <span class="contact-addr" id="mailAddr">taka.contact.ai.dev@gmail.com</span>
-        <button type="button" class="copy-btn" id="copyMail">コピー</button>
-        <span class="copy-status" id="copyStatus" role="status" aria-live="polite"></span>
-      </div>
       <p id="headline" class="hero-sub rv" style="--i:2"></p>
       <p id="summary" class="lead-text rv" style="--i:2"></p>
       <div class="stats rv" id="stats" style="--i:3"></div>

@@ -105,9 +105,37 @@ body {
 .signal b:nth-child(1) { height: 4px; } .signal b:nth-child(2) { height: 7px; }
 .signal b:nth-child(3) { height: 10px; } .signal b:nth-child(4) { height: 12px; }
 .social { display: flex; align-items: center; gap: 6px; flex: none; }
-.social a { display: grid; place-items: center; width: 44px; height: 44px; color: var(--text); border: 1px solid var(--line-hi); transition: color 0.2s, border-color 0.2s, background 0.2s; }
-.social a:hover, .social a:focus-visible { color: #000; background: var(--yellow); border-color: var(--yellow); }
+.social a, .social button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; color: var(--text); background: transparent; border: 1px solid var(--line-hi); cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+.social a:hover, .social a:focus-visible, .social button:hover, .social button:focus-visible, .social button[aria-expanded="true"] { color: #000; background: var(--yellow); border-color: var(--yellow); }
 .social svg { width: 22px; height: 22px; fill: currentColor; }
+svg.line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+
+/* Email popover under the header's mail icon */
+.mail-pop {
+  position: absolute; top: calc(100% + 8px); right: clamp(16px, 3vw, 32px);
+  display: flex; align-items: center; gap: 12px;
+  max-width: calc(100vw - 32px);
+  padding: 12px 12px 12px 16px;
+  background: #0c0f17; border: 1px solid var(--yellow);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6), 0 0 18px rgba(252, 238, 10, 0.15);
+  text-transform: none; letter-spacing: normal;
+}
+.mail-pop[hidden] { display: none; }
+.mail-pop-label { font: 700 10px/1 var(--font-hud); letter-spacing: 0.24em; color: var(--yellow); }
+.mail-addr { font: 500 15px/1.4 var(--font-mono); color: var(--text); user-select: all; overflow-wrap: anywhere; }
+.copy-icon {
+  flex: none; display: grid; place-items: center; width: 36px; height: 36px; padding: 0;
+  color: var(--text); background: transparent; border: 1px solid var(--line-hi); cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.copy-icon:hover, .copy-icon:focus-visible { color: #000; background: var(--yellow); border-color: var(--yellow); }
+.copy-icon svg { width: 18px; height: 18px; }
+.copy-icon .ic-done, .copy-icon.copied .ic-copy { display: none; }
+.copy-icon.copied .ic-done { display: block; }
+.copy-icon.copied { color: var(--cyan); border-color: var(--cyan); background: transparent; }
+.copy-status { position: absolute; top: calc(100% + 6px); right: 0; font: 500 12px/1 var(--font-jp); color: var(--cyan); white-space: nowrap; }
+.copy-status:empty { display: none; }
+@media (max-width: 640px) { .mail-pop-label { display: none; } }
 @media (max-width: 640px) { .hud-clock, .signal, .hud-section { display: none; } }
 
 /* ===== Section rail ===== */
@@ -186,17 +214,6 @@ h1 em { font-style: normal; color: var(--yellow); }
 }
 .lead-text { color: #b9bfd0; max-width: 40em; margin: 0; font-size: 1rem; }
 h1.catch { margin-bottom: 18px; font-size: clamp(2.1rem, 5.6vw, 4.2rem); line-height: 1.25; font-family: var(--font-jp); }
-.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 28px; }
-.contact-label { font: 700 11px/1 var(--font-hud); letter-spacing: 0.24em; color: var(--yellow); }
-.contact-addr { font: 500 clamp(0.95rem, 1.6vw, 1.1rem)/1.4 var(--font-mono); color: var(--text); user-select: all; overflow-wrap: anywhere; }
-.copy-btn {
-  font: 700 12px/1 var(--font-jp); color: var(--text); cursor: pointer;
-  padding: 8px 14px; background: transparent; border: 1px solid var(--line-hi);
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-.copy-btn:hover, .copy-btn:focus-visible { background: var(--yellow); color: #000; border-color: var(--yellow); }
-.copy-btn.done { color: var(--cyan); border-color: var(--cyan); background: transparent; }
-.copy-status { font-size: 12px; color: var(--muted); }
 .hero-sub { margin: 0 0 16px; font: 700 clamp(1.05rem, 1.9vw, 1.35rem)/1.6 var(--font-jp); word-break: keep-all; overflow-wrap: anywhere; }
 .hero-sub .ph { display: block; }
 .hero-sub em { font-style: normal; color: var(--cyan); }

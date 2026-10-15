@@ -338,11 +338,27 @@ function setupScanner() {
   })(prevT);
 }
 
-function setupCopy() {
+/* Header mail icon opens a small popover with the address and a copy icon. */
+function setupMail() {
+  const toggle = $("mailToggle");
+  const pop = $("mailPop");
   const btn = $("copyMail");
   const status = $("copyStatus");
   const addr = $("mailAddr").textContent.trim();
   let timer = 0;
+
+  const setOpen = (open) => {
+    pop.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+  };
+  toggle.addEventListener("click", () => setOpen(pop.hidden));
+  document.addEventListener("click", (e) => {
+    if (!pop.hidden && !pop.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !pop.hidden) { setOpen(false); toggle.focus(); }
+  });
+
   btn.addEventListener("click", async () => {
     let ok = false;
     try { await navigator.clipboard.writeText(addr); ok = true; } catch (e) {
@@ -353,11 +369,10 @@ function setupCopy() {
       try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
       ta.remove();
     }
-    btn.textContent = ok ? "コピーしました" : "コピーできませんでした";
-    btn.classList.toggle("done", ok);
-    status.textContent = ok ? "" : "アドレスを選択してコピーしてください";
+    btn.classList.toggle("copied", ok);
+    status.textContent = ok ? "コピーしました" : "コピーできませんでした。アドレスを選択してコピーしてください";
     clearTimeout(timer);
-    timer = setTimeout(() => { btn.textContent = "コピー"; btn.classList.remove("done"); status.textContent = ""; }, 2000);
+    timer = setTimeout(() => { btn.classList.remove("copied"); status.textContent = ""; }, 2000);
   });
 }
 
@@ -501,7 +516,7 @@ function setupBoot() {
 setupBoot();
 setupBackground();
 setupScanner();
-setupCopy();
+setupMail();
 
 fetch("data.json", { cache: "no-store" })
   .then((res) => res.json())
