@@ -31,8 +31,8 @@ const WORKS = [
   {
     name: "1枚の絵から3Dキャラクターを作る",
     kind: "ローカルAI 3Dパイプライン",
-    body: "1枚の2Dキャラクター絵から、手元のGPUで動くローカルの生成AIで3Dモデルを作り、リグと歩きのアニメーションまで付けるパイプライン。クラウドに頼らず、生成から仕上げまで自分のPCで完結させています。",
-    tech: ["ComfyUI", "画像編集AI", "画像→3D生成", "Blender"],
+    body: "1枚の2Dキャラクター絵から3Dモデルを作り、リグと歩きのアニメーションまで付けるパイプライン。画像生成と3D生成は、手元のGPUで動くローカルAIで行っています。Blender での形の修正やリギングなどの工程は、Claude Code に操作させて進めています。",
+    tech: ["ComfyUI", "画像編集AI", "画像→3D生成", "Blender", "Claude Code"],
     media: [
       { src: "media/knight-2d.jpg", w: 600, h: 900, alt: "盾と剣を持つ女性騎士の2Dイラスト", cap: "2D 元絵" },
       { src: "media/knight-3d-walk.gif", w: 600, h: 760, alt: "同じ騎士の3Dモデルが歩くアニメーション", cap: "3D モデル" }
