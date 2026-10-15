@@ -22,20 +22,20 @@ const pad2 = (n) => String(n).padStart(2, "0");
 /* Works are fixed site content (data.json is regenerated automatically, so they live here). */
 const WORKS = [
   {
-    name: "Wandering Neko",
+    name: "スマホの画面を歩く猫",
     kind: "Android アプリ",
     body: "スマホの画面を猫が歩き回り、昼寝をし、画面の端にぶら下がる。ホーム画面のアイコンやアプリのボタンにも飛び乗る、常駐型のオーバーレイアプリ。行動ロジックは Android に依存しない純 Kotlin の状態機械にして、テストで検証しています。通信は一切しません。",
     tech: ["Kotlin", "Android", "AccessibilityService", "AI生成スプライト"],
-    media: [{ src: "media/wandering-neko-demo.gif", w: 420, h: 436, alt: "スマホのホーム画面の検索バーの上を、茶トラの猫が歩いているデモ" }]
+    media: [{ src: "media/cat-overlay-demo.gif", w: 420, h: 436, alt: "スマホのホーム画面の検索バーの上を、茶トラの猫が歩いているデモ" }]
   },
   {
-    name: "Local Image AI Workspace",
+    name: "1枚の絵から3Dキャラクターを作る",
     kind: "ローカルAI 3Dパイプライン",
     body: "1枚の2Dキャラクター絵から、手元のGPUで動くローカルの生成AIで3Dモデルを作り、リグと歩きのアニメーションまで付けるパイプライン。クラウドに頼らず、生成から仕上げまで自分のPCで完結させています。",
     tech: ["ComfyUI", "画像編集AI", "画像→3D生成", "Blender"],
     media: [
-      { src: "media/guardian-2d.jpg", w: 600, h: 900, alt: "盾と剣を持つ女性騎士の2Dイラスト", cap: "2D 元絵" },
-      { src: "media/guardian-3d-walk.gif", w: 600, h: 760, alt: "同じ騎士の3Dモデルが歩くアニメーション", cap: "3D モデル" }
+      { src: "media/knight-2d.jpg", w: 600, h: 900, alt: "盾と剣を持つ女性騎士の2Dイラスト", cap: "2D 元絵" },
+      { src: "media/knight-3d-walk.gif", w: 600, h: 760, alt: "同じ騎士の3Dモデルが歩くアニメーション", cap: "3D モデル" }
     ]
   }
 ];
