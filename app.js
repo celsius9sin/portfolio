@@ -6,6 +6,7 @@ const $ = (id) => document.getElementById(id);
 
 /* Section order. `key` is the data.json field that must be non-empty for the section to show. */
 const SECTIONS = [
+  { id: "works", key: null, en: "SHOWCASE", title: "作品" },
   { id: "strengths", key: "strengths", en: "BUFFS", title: "強み" },
   { id: "experience", key: "experience", en: "QUEST LOG", title: "経験領域" },
   { id: "agents", key: "agents", en: "PARTY", title: "使用AIエージェント" },
@@ -17,6 +18,27 @@ const SECTIONS = [
 const TIERS = ["MAIN WEAPON", "SIDEARM", "IN TRAINING"];
 const AGENT_TIERS = { lead: "主力 // LEAD", support: "併用 // SUPPORT", trial: "試用 // TRIAL" };
 const pad2 = (n) => String(n).padStart(2, "0");
+
+/* Works are fixed site content (data.json is regenerated automatically, so they live here). */
+const WORKS = [
+  {
+    name: "Wandering Neko",
+    kind: "Android アプリ",
+    body: "スマホの画面を猫が歩き回り、昼寝をし、画面の端にぶら下がる。ホーム画面のアイコンやアプリのボタンにも飛び乗る、常駐型のオーバーレイアプリ。行動ロジックは Android に依存しない純 Kotlin の状態機械にして、テストで検証しています。通信は一切しません。",
+    tech: ["Kotlin", "Android", "AccessibilityService", "AI生成スプライト"],
+    media: [{ src: "media/wandering-neko-demo.gif", w: 420, h: 436, alt: "スマホのホーム画面の検索バーの上を、茶トラの猫が歩いているデモ" }]
+  },
+  {
+    name: "Local Image AI Workspace",
+    kind: "ローカルAI 3Dパイプライン",
+    body: "1枚の2Dキャラクター絵から、手元のGPUで動くローカルの生成AIで3Dモデルを作り、リグと歩きのアニメーションまで付けるパイプライン。クラウドに頼らず、生成から仕上げまで自分のPCで完結させています。",
+    tech: ["ComfyUI", "画像編集AI", "画像→3D生成", "Blender"],
+    media: [
+      { src: "media/guardian-2d.jpg", w: 600, h: 900, alt: "盾と剣を持つ女性騎士の2Dイラスト", cap: "2D 元絵" },
+      { src: "media/guardian-3d-walk.gif", w: 600, h: 760, alt: "同じ騎士の3Dモデルが歩くアニメーション", cap: "3D モデル" }
+    ]
+  }
+];
 
 /* ---------- DOM helpers ---------- */
 function el(tag, opts = {}, children = []) {
@@ -48,7 +70,6 @@ function section(s, body) {
 function renderHero(d) {
   const h1 = $("headline");
   const phrases = d.headline.split(/(?<=、)/);
-  h1.setAttribute("data-text", phrases.join("\n"));
   const key = "AIエージェント";
   h1.replaceChildren(...phrases.map((ph) => {
     const line = el("span", { cls: "ph" });
@@ -74,6 +95,25 @@ function renderHero(d) {
       el("b", { text: c.name }),
       el("span", { cls: "cert-issuer", text: c.year ? `${c.issuer} · ${c.year}年取得` : c.issuer })
     ])));
+}
+
+function renderWorks() {
+  const cards = WORKS.map((w, i) => {
+    const figs = w.media.flatMap((m, j) => {
+      const parts = [el("img", { attrs: { src: m.src, width: m.w, height: m.h, alt: m.alt, loading: "lazy", decoding: "async" } })];
+      if (m.cap) parts.push(el("figcaption", { text: m.cap }));
+      const fig = el("figure", { cls: "work-fig" }, parts);
+      return j > 0 ? [el("span", { cls: "work-arrow", text: "→", attrs: { "aria-hidden": "true" } }), fig] : [fig];
+    });
+    return el("article", { cls: "work rv", i }, [panel([
+      el("div", { cls: "work-media" }, figs),
+      el("span", { cls: "q-id", text: w.kind }),
+      el("h3", { text: w.name }),
+      el("p", { cls: "q-sum", text: w.body }),
+      tags(w.tech, "hot")
+    ])]);
+  });
+  return el("div", { cls: "works" }, cards);
 }
 
 function renderStrengths(d) {
@@ -179,11 +219,11 @@ function renderEnd(d) {
 function render(d) {
   document.title = d.title;
   renderHero(d);
-  const active = SECTIONS.filter((s) => d[s.key] && d[s.key].length).map((s, i) => ({ ...s, num: pad2(i + 1) }));
+  const active = SECTIONS.filter((s) => !s.key || (d[s.key] && d[s.key].length)).map((s, i) => ({ ...s, num: pad2(i + 1) }));
   renderRail(active);
   renderTicker(d);
   const bodies = {
-    strengths: renderStrengths, experience: renderExperience, agents: renderAgents, skills: renderSkills,
+    works: renderWorks, strengths: renderStrengths, experience: renderExperience, agents: renderAgents, skills: renderSkills,
     certs: renderCerts, principles: renderPrinciples, learning: renderLearning
   };
   $("sections").replaceChildren(...active.map((s) => section(s, bodies[s.id](d))));

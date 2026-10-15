@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#06070b">
 <title>Engineer Portfolio</title>
-<meta name="description" content="設計・レビュー・調整とAIエージェント活用で開発を前に進めるエンジニアの、経験とスキルのまとめ。">
+<meta name="description" content="好きなことで世界を少し面白く。個人開発の作品と、設計・レビュー・調整とAIエージェント活用で開発を前に進めるエンジニアの、経験とスキルのまとめ。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=JetBrains+Mono:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
@@ -29,6 +29,11 @@
     <span class="hud-section" id="hudSection">00 // PROFILE</span>
     <span class="signal" aria-hidden="true"><b></b><b></b><b></b><b></b></span>
     <span class="hud-clock" id="clock">00:00:00</span>
+    <nav class="social" aria-label="連絡先・リンク">
+      <a href="https://x.com/celsius9sin" target="_blank" rel="noopener noreferrer" aria-label="X" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.25 6.93ZM17.6 20.64h2.04L6.49 3.24H4.3Z"/></svg></a>
+      <a href="https://zenn.dev/celsius9sin" target="_blank" rel="noopener noreferrer" aria-label="Zennの記事" title="Zennの記事"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.26 23.77h4.99c.26 0 .5-.15.64-.35L19.61.87c.18-.29-.03-.64-.38-.64h-4.72c-.24 0-.44.11-.56.32L.03 23.36c-.09.18.03.41.23.41ZM17.45 23.42l6.48-10.41c.2-.32-.03-.73-.41-.73h-4.7c-.17 0-.35.09-.44.23l-6.65 10.65c-.18.26.03.61.35.61h4.78c.23 0 .47-.12.59-.35Z"/></svg></a>
+      <a href="mailto:taka.contact.ai.dev@gmail.com" aria-label="コンタクト(メール)" title="taka.contact.ai.dev@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2" y="4.5" width="20" height="15" rx="1"/><path d="m2.5 5.5 9.5 7.5 9.5-7.5"/></svg></a>
+    </nav>
   </div>
 </header>
 
@@ -38,11 +43,12 @@
   <section class="hero" id="top" data-hud="00 // PROFILE">
     <div>
       <div class="kicker rv">Player profile // Engineer</div>
-      <h1 id="headline" class="glitch rv" style="--i:1"></h1>
+      <h1 class="catch glitch rv" style="--i:1" data-text="好きなことで&#10;世界を少し面白く"><span class="ph">好きなことで</span><span class="ph">世界を<em>少し面白く</em></span></h1>
+      <p id="headline" class="hero-sub rv" style="--i:2"></p>
       <p id="summary" class="lead-text rv" style="--i:2"></p>
       <div class="stats rv" id="stats" style="--i:3"></div>
       <div class="certs rv" id="certs" style="--i:4"></div>
-      <a class="scroll-cue rv" href="#strengths" style="--i:5">SCROLL</a>
+      <a class="scroll-cue rv" href="#works" style="--i:5">SCROLL</a>
     </div>
     <div class="scanner rv" style="--i:2" aria-hidden="true">
       <svg viewBox="0 0 200 200" fill="none">
